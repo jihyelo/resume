@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const moonIcon = document.querySelectorAll('.toggleIcon')[0];
     const sunIcon = document.querySelectorAll('.toggleIcon')[1];
     const toggleText = document.querySelector('.toggleText');
-    const fadeInElement = document.querySelector('.fade-in-element'); // 클래스 선택자 수정
+    const fadeInElements = document.querySelectorAll('.fade-in-element'); // 수정된 부분: 모든 fade-in-element 요소 선택
 
     // Dark mode 추가 및 제거 함수
     function switchTheme(e) {
@@ -51,19 +51,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 스크롤 내릴 때 요소가 부드럽게 나타나는 효과 추가
     function checkVisibility() {
-        var position = fadeInElement.getBoundingClientRect();
-        var windowHeight = window.innerHeight;
+        fadeInElements.forEach(element => {
+            var position = element.getBoundingClientRect();
+            var windowHeight = window.innerHeight;
 
-        if (position.top < windowHeight * 0.75) {
-            fadeInElement.classList.add('visible');
-        }
+            if (position.top < windowHeight * 0.75) {
+                element.classList.add('visible');
+            }
+        });
     }
 
+    // 페이지 로드 시 및 스크롤 이벤트 시 요소의 가시성 확인
     checkVisibility();
 
-    window.addEventListener('scroll', function () {
-        checkVisibility();
-    });
+    window.addEventListener('scroll', checkVisibility);
 });
-
 
